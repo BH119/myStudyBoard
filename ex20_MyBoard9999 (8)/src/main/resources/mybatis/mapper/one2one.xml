@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD 파일 : XML태그 및 속성을 정의하는 파일 -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- SQL문 끝에 세미콜론은 붙이지 않는다! 오류!! -->
+<mapper namespace="com.study.springboot.dao.one2oneDao">
+
+ 	 <!-- 전체 조회 -->	
+	<select id="one2oneList" resultType="com.study.springboot.dto.one2oneDto">
+	select * from one2one order by one2one_idx desc
+	</select>
+	
+    <!-- 게시글 갯수 조회 -->
+	<select id="one2oneCount" resultType="int">
+	select count(*) from one2one
+	</select>
+
+	<!-- 저장하기 -->
+	<insert id="one2oneWriteAction">
+	insert into one2one 
+		values ( one2one_idx_SEQ.NEXTVAL , #{param1},#{param2},#{param3},sysdate)
+	</insert>
+	
+	<!-- 게시물 1~5 , 6~10 조회하게하는 쿼리문 (페이징처리를 위한)-->
+	<select id="betweenList" resultType="com.study.springboot.dto.one2oneDto">
+		select B.* from
+		(select rownum R , one2one.* from one2one order by one2one_idx desc) B
+		where R between #{param1} and #{param2}
+	</select>
+	
+	<!--제목검색-->
+	<select id="betweenListTitle" resultType="com.study.springboot.dto.one2oneDto">
+		select B.* from
+			(select rownum R , one2one.* from one2one 
+			where one2one_title LIKE '%' ||  #{param3} || '%'
+	    	order by one2one_idx desc) B
+		where R between #{param1} and #{param2}
+	</select>
+	
+	<!-- 제목 게시물 총 개수 -->
+	<select id="titleCount" resultType="int">
+		select count(*) from one2one where one2one_title LIKE '%' ||  #{param1} || '%'
+	</select>
+	
+	<!-- 글쓴이 검색 -->
+	<select id="betweenListWrite" resultType="com.study.springboot.dto.one2oneDto">
+		select B.* from
+			(select rownum R , board.* from one2one 
+			where one2one_name LIKE '%' ||  #{param3} || '%'
+	    	order by one2one_idx desc) B
+		where R between #{param1} and #{param2}
+	</select>
+	
+	<!-- 글쓴이 게시물 총 개수 -->
+	<select id="writeCount" resultType="int">
+		select count(*) from one2one where one2one_name LIKE '%' ||  #{param1} || '%'
+	</select>
+	
+
+	
+	
+</mapper>    
+
