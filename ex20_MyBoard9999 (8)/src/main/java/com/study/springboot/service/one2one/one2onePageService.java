@@ -19,7 +19,6 @@ public class one2onePageService {
 	one2oneDao iOne2oneDao;
 	
 	public List<one2oneDto> PagingList(
-			String selectList, String keyword,
 			String page,Model model) {
 		
 	
@@ -27,7 +26,7 @@ public class one2onePageService {
 		model.addAttribute("page",page); // 현재 페이지를 반환
 		
 		int curPage = Integer.parseInt(page); //현재페이지
-		int listSize =5; //한페이지당 게시글 개수
+		int listSize =10; //한페이지당 게시글 개수
 		int startList = (curPage - 1) * listSize + 1;  //쿼리문 시작 게시물번호
 		int endList =  (curPage * listSize); // 쿼리문 끝 게시물번호
 		

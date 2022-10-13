@@ -16,10 +16,18 @@ public interface one2oneDao {
 	//글 갯수 출력
 	public int one2oneCount();
 	
+	
+	
 	//글 저장하기
-		public int one2oneWriteAction
+	public int one2oneWriteAction
 		(String one2one_name, String one2one_title, String one2one_content);
 	
+	//답글 추가	
+	public int one2oneReplyAction (String one2one_name, String one2one_title, String one2one_content,int one2one_idx);	
+	//step업데이트
+	public int replyUpdateAction(int one2one_idx);
+		
+		
 	//페이징당 게시글 출력
 	public List<one2oneDto> betweenList(int startList, int endList);
 

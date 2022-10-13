@@ -43,7 +43,7 @@
 	      <td>${ dto.one2one_content }</td>
 	      <td><c:set var="dateVar" value="${ dto.one2one_date }" />
 			<fmt:formatDate value="${dateVar}" pattern="yyyy-MM-dd"/></td>
-		  <td> <button ></button> </td>
+		  <td> <button type="button" onclick="location.href='one2oneWrite2?one2one_idx=${ dto.one2one_idx }'">답변달기</button> </td>
 	    </tr>
 	  </c:forEach>
 	  <c:choose>
@@ -89,27 +89,27 @@
   <c:choose>
   	<c:when test="${page > 1}">
   		<li><button class="page-link" 
-  		onclick='location.href="/?page=${page-1}&selectList=${ selectList}&keyword=${keyword}&orderHit=${orderHit}"'>Previous</button></li>
+  		onclick='location.href="one2one?page=${page-1}"'>Previous</button></li>
     </c:when>
     <c:otherwise>
     	<li><button class="page-link" 
-    	onclick='location.href="/?page=${page-1}&selectList=${ selectList}&keyword=${keyword}&orderHit=${orderHit}"' disabled="disabled">Previous</button></li>
+    	onclick='location.href="one2one?page=${page-1}"' disabled="disabled">Previous</button></li>
     </c:otherwise>
    </c:choose> 
     
    	<c:forEach var="i" begin="${ startPage}" end="${ endPage}">
    		<li><a class="page-link" 
    		
-   		href="/?page=${i}&selectList=${ selectList}&keyword=${keyword}&orderHit=${orderHit}">${i}</a></li>
+   		href="one2one?page=${i}">${i}</a></li>
   	  </c:forEach>
     
    <c:choose>
   	<c:when test="${page < totalPage}">
-  		<li><button class="page-link" onclick='location.href="/?page=${page+1}&selectList=${selectList}&keyword=${keyword}&orderHit=${orderHit}"'>Next</button></li>
+  		<li><button class="page-link" onclick='location.href="one2one?page=${page+1}"'>Next</button></li>
     </c:when>
     <c:otherwise>
     	<li><button class="page-link" 
-    	onclick='location.href="/?page=${page+1}&selectList=${selectList}&keyword=${keyword}&orderHit=${orderHit}"' disabled="disabled">Next</button></li>
+    	onclick='location.href="one2one?page=${page+1}"' disabled="disabled">Next</button></li>
     </c:otherwise>
    </c:choose>
   </ul>

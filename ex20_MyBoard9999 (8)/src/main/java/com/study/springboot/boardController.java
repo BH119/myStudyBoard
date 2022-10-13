@@ -399,7 +399,7 @@ public class boardController {
 	
 	
 	//이미지 게시판
-	@RequestMapping("imgBoard1/imgBoard1")
+	@RequestMapping("/imgBoard1")
 	public String imgBoard(
 			@RequestParam(defaultValue = "1") String page, // null값이면 page 디폴트 값이 "1"이다 페이지초기값 설정
 			@RequestParam(value="selectList",required=false) String selectList,
@@ -569,12 +569,7 @@ public class boardController {
 	@RequestMapping("one2one")
 	public String one2one(
 			@RequestParam(defaultValue = "1") String page, // null값이면 page 디폴트 값이 "1"이다 페이지초기값 설정
-			@RequestParam(value="selectList",required=false) String selectList,
-			@RequestParam(value="keyword",required=false) String keyword,
-			@RequestParam(value="orderHit",required=false) String orderHit,
 			Model model) {
-		
-		if(selectList == null) {
 			
 			System.out.println("아ㅏㅏㅏㅏㅏㅏㅏㅏㅏ");
 			//글 개수
@@ -582,28 +577,8 @@ public class boardController {
 			model.addAttribute("listCount" , listCount);
 			//페이징
 			iOne2onePageService.PagingList
-			(selectList ,keyword ,page, model);
+			(page, model);
 			
-		}
-		else if(selectList.equals("title")) {	
-			int type = 1;
-			//제목 검색글 개수
-			int listCount = iImgBoardDao.imgTitleCount(keyword);
-			model.addAttribute("listCount" , listCount);
-			//제목 검색
-			iSearchService.betweenList
-			(type,keyword,selectList,page,orderHit,model);
-			
-			
-		}else if(selectList.equals("write")) {
-			int type = 2;
-			//글쓴이 게시물 및 개수
-			int listCount = iBoardDao.writeCount(keyword);
-			model.addAttribute("listCount" , listCount);
-			iSearchService.betweenList
-			(type,keyword,selectList,page,orderHit,model);
-			
-		}
 		
 		return "one2one/one2one";
 	
@@ -611,10 +586,18 @@ public class boardController {
 	@RequestMapping("one2oneWrite")
 	public String one2oneWrite( )
 	{
-		
-		 
 		 return "one2one/one2oneWrite";
 	}
+	@RequestMapping("one2oneWrite2")
+	public String one2oneWrite2( )
+	{
+		
+		 
+		 return "one2one/one2oneWrite2";
+	}
+	
+	
+	
 	
 	@RequestMapping("one2oneWriteAction")
 	public String one2oneWriteAction( 
@@ -625,6 +608,26 @@ public class boardController {
 		 System.out.println(one2one_title);
 		 iOne2oneDao.one2oneWriteAction(one2one_name, one2one_title, one2one_content);
 		 
-		 return "redirect:one2one/one2one";
+		 return "redirect:/one2one";
 	}
+	
+	
+	@RequestMapping("one2oneWriteAction2")
+	public String one2oneWriteAction2( 
+			@RequestParam("one2oneTitle") String one2one_title,
+			@RequestParam("one2oneContent") String one2one_content,
+			@RequestParam("one2oneName") String one2one_name,
+			@RequestParam("one2one_idx") int one2one_idx)
+	{
+		 System.out.println(one2one_title);
+		 iOne2oneDao.one2oneReplyAction(one2one_name, one2one_title, one2one_content,one2one_idx);
+		 
+		 return "redirect:/one2one";
+	}
+	
+	
+	
+	
+	
+	
 }	

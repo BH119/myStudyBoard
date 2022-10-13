@@ -19,49 +19,42 @@
 	select count(*) from one2one
 	</select>
 
-	<!-- 저장하기 -->
+	<!-- 새글추가 -->
 	<insert id="one2oneWriteAction">
 	insert into one2one 
-		values ( one2one_idx_SEQ.NEXTVAL , #{param1},#{param2},#{param3},sysdate)
+		values ( one2one_idx_SEQ.NEXTVAL , #{param1},#{param2},#{param3},sysdate,
+				(select NVL(MAX(refer),0)+1 from one2one),0,0)
 	</insert>
+	
+	
+	<!-- 답글 추가 -->      
+	<insert id="one2oneReplyAction">     
+	 insert into one2one
+		values ( one2one_idx_SEQ.NEXTVAL , #{param1},#{param2},#{param3} ,sysdate,
+				(select refer from one2one where one2one_idx= #{param4}),
+                (select step from one2one where one2one_idx= #{param4})+1 ,
+                (select one2one.depth from one2one where one2one_idx= #{param4})+1)
+	</insert>
+	
+	<!--step업데이트  -->
+	<update id="replyUpdateAction" >
+	update one2one set step = step+1 where step > (select step from one2one where one2one_idx = #{param1})
+	  
+	</update>
+	
+	
+	
 	
 	<!-- 게시물 1~5 , 6~10 조회하게하는 쿼리문 (페이징처리를 위한)-->
 	<select id="betweenList" resultType="com.study.springboot.dto.one2oneDto">
-		select B.* from
-		(select rownum R , one2one.* from one2one order by one2one_idx desc) B
+		select C.* from 
+    		(select  rownum R , B.* from
+        		(select one2one.* from one2one order by refer,step) B) C
 		where R between #{param1} and #{param2}
 	</select>
 	
-	<!--제목검색-->
-	<select id="betweenListTitle" resultType="com.study.springboot.dto.one2oneDto">
-		select B.* from
-			(select rownum R , one2one.* from one2one 
-			where one2one_title LIKE '%' ||  #{param3} || '%'
-	    	order by one2one_idx desc) B
-		where R between #{param1} and #{param2}
-	</select>
-	
-	<!-- 제목 게시물 총 개수 -->
-	<select id="titleCount" resultType="int">
-		select count(*) from one2one where one2one_title LIKE '%' ||  #{param1} || '%'
-	</select>
-	
-	<!-- 글쓴이 검색 -->
-	<select id="betweenListWrite" resultType="com.study.springboot.dto.one2oneDto">
-		select B.* from
-			(select rownum R , board.* from one2one 
-			where one2one_name LIKE '%' ||  #{param3} || '%'
-	    	order by one2one_idx desc) B
-		where R between #{param1} and #{param2}
-	</select>
-	
-	<!-- 글쓴이 게시물 총 개수 -->
-	<select id="writeCount" resultType="int">
-		select count(*) from one2one where one2one_name LIKE '%' ||  #{param1} || '%'
-	</select>
 	
 
-	
 	
 </mapper>    
 
