@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD 파일 : XML태그 및 속성을 정의하는 파일 -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- SQL문 끝에 세미콜론은 붙이지 않는다! 오류!! -->
+<mapper namespace="com.study.springboot.dao.imgBoardDao">
+
+	<!-- 전체 조회(이미지게시판) -->
+	<select id="imgBoardList" resultType="com.study.springboot.dto.imgBoardDto">
+		select * from img_board order by img_board_idx desc
+	</select>
+
+	<!-- 게시글 갯수 조회(이미지게시판) -->
+	<select id="imgBoardCount" resultType="int">
+		select count(*) from img_board
+	</select>
+
+	<!-- 단건 조회 - 한 행만 (이미지게시판) --> 
+	<select id="imgBoardModify"
+		resultType="com.study.springboot.dto.imgBoardDto">
+		select * from img_board where img_board_idx = #{param1}
+	</select>
+
+	<!-- 저장하기 (이미지게시판) -->
+	<insert id="imgWriteAction">
+		insert into img_board
+		values ( img_board_idx_SEQ.NEXTVAL ,
+		#{param1},#{param2},#{param3},#{param4},
+		#{param5},#{param6}, #{param7}, sysdate, 0 , 0 ,#{param8} )
+
+	</insert>
+
+	<!-- 이미지 이름,경로 삭제 -->
+	<delete id="imgDelNamePath">
+		update board set filename1 = null ,filename2 = null,filename3 = null
+		,filepath = null
+		where board_idx = #{param3}
+	</delete>
+
+
+	<!-- 행 수정 -->
+	<update id="updateAction">
+		update board set board_title=#{param1} , board_name=#{param2} ,
+		board_content=#{param3} ,
+		filename1=#{param5},filename2=#{param6},filename3=#{param7},
+		filepath=#{param8}
+		where board_idx = #{param4}
+	</update>
+
+	<!-- 행 삭제 -->
+	<delete id="deleteAction">
+		delete from board where board_idx = #{param1}
+	</delete>
+
+
+	<!-- 조회수 (이미지게시판)-->
+	<update id="imgUpdateHit">
+		update img_board set img_board_hit = img_board_hit+1 where img_board_idx = #{param1}
+	</update>
+
+
+	<!-- 게시물 1~8 , 9~16 조회하게하는 쿼리문 (페이징처리를 위한) ,(이미지게시판) -->
+	<select id="imgBetweenList" resultType="com.study.springboot.dto.imgBoardDto">
+		select B.* from  
+    		(select rownum R ,A.* from
+        		(select img_board.* from
+				img_board order by img_board_idx desc) A) B
+        where R between #{param1} and #{param2}
+
+	</select>
+
+	<!--제목검색 (이미지게시판)-->
+	<select id="imgBetweenListTitle" resultType="com.study.springboot.dto.imgBoardDto">
+		select B.* from
+		(select rownum R , img_board.* from img_board
+		where img_board_title LIKE '%' || #{param3} || '%'
+		order by img_board_idx desc) B
+		where R between #{param1} and #{param2}
+	</select>
+
+	<!-- 제목 게시물 총 개수 (이미지게시판) -->
+	<select id="imgTitleCount" resultType="int">
+		select count(*) from img_board
+		where img_board_title LIKE '%' || #{param1} || '%'
+	</select>
+
+	<!-- 글쓴이 검색 (이미지게시판) -->
+	<select id="imgBetweenListWrite" resultType="com.study.springboot.dto.imgBoardDto">
+		select B.* from
+		(select rownum R , img_board.* from img_board
+		where img_board_name LIKE '%' || #{param3} || '%'
+		order by img_board_idx desc) B
+		where R between #{param1} and #{param2}
+	</select>
+
+	<!-- 글쓴이 게시물 총 개수 (이미지게시판)-->
+	<select id="imgWriteCount" resultType="int">
+		select count(*) from img_board
+		where img_board_name LIKE '%' || #{param1} || '%'
+	</select>
+
+	<!-- 조회수 정렬  (이미지게시판)-->
+	<select id="imgOrderHit" resultType="com.study.springboot.dto.imgBoardDto">
+		select B.* from
+		(select rownum R , A.* from
+		(select img_board.* from img_board order by img_board_hit desc ,img_board_idx desc) A) B
+		where R between #{param1} and #{param2}
+	</select>
+
+	<!-- 카테고리검색(원두)(이미지게시판) -->
+	<select id="imgBetweenListBeans" resultType="com.study.springboot.dto.imgBoardDto">
+		select B.* from
+		(select rownum R , img_board.* from img_board
+		where img_board_category = #{param3}
+		order by img_board_idx desc) B
+		where R between #{param1} and #{param2}
+	</select>
+
+	<!--  총게시물개수 (이미지게시판)-->
+	<select id="imgBeansCount" resultType="int">
+		select count(*) from img_board
+		where img_board_category = #{param1}
+	</select>
+	
+	
+	<!-- 카테고리검색(콜드브루)(이미지게시판) -->
+	<select id="imgBetweenListColdBrew" resultType="com.study.springboot.dto.imgBoardDto">
+		select B.* from
+		(select rownum R , img_board.* from img_board
+		where img_board_category = #{param3}
+		order by img_board_idx desc) B
+		where R between #{param1} and #{param2}
+	</select>
+
+	<!-- 콜드브루 총게시물개수 (이미지게시판)-->
+	<select id="imgColdBrewCount" resultType="int">
+		select count(*) from img_board
+		where img_board_category = #{param1}
+	</select>
+	
+
+	
+
+</mapper>    
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.study.springboot.dao.membersDao">
+
+<!-- Ajax 중복체크 -->
+<select id="idChkAjax" resultType="int">
+select count(member_id) from members where member_id = #{param1} 
+</select>
+
+<!-- 회원가입 -->
+<insert id="joinAction">
+ insert into members values ( member_idx_seq.NEXTVAL , #{param1}, #{param2}, #{param3},#{param4},sysdate )
+</insert>
+
+<!-- 로그인액션 -->
+<select id="loginAction" resultType="int">
+select count(*) from members where member_id = #{param1} and member_pw = #{param2}
+</select>
+
+<!-- 아이디찾기 -->
+<select id="idFindAction" resultType="com.study.springboot.dto.membersDto">
+select member_joindate , member_id from members where member_email = #{param1} and member_name = #{param2}
+</select>
+
+<!-- 비밀번호찾기: 이름 아이디값 체크 -->
+<select id="pwFindNextStep" resultType="com.study.springboot.dto.membersDto">
+select member_name,member_id from members where member_name = #{param1} and member_id = #{param2}
+</select>
+
+<!-- 비밀번호찾기: 이름 아이디 이메일 값과 겹치는 pw출력 -->
+<select id="pwFindAction" resultType="String">
+select member_pw from members where member_name = #{param1} and member_id = #{param2} and member_email = #{param3}
+</select>
+
+
+</mapper>

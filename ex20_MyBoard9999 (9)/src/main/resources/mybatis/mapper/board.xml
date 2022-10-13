@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD 파일 : XML태그 및 속성을 정의하는 파일 -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- SQL문 끝에 세미콜론은 붙이지 않는다! 오류!! -->
+<mapper namespace="com.study.springboot.dao.boardDao">
+
+ 	 <!-- 전체 조회 -->	
+	<select id="boardList" resultType="com.study.springboot.dto.boardDto">
+	select * from board order by board_idx desc
+	</select>
+	
+    <!-- 게시글 갯수 조회 -->
+	<select id="boardCount" resultType="int">
+	select count(*) from board
+	</select>
+
+	<!-- 단건 조회 - 한 행만 -->
+	<select id="boardModify" resultType="com.study.springboot.dto.boardDto">
+	select * from board where board_idx = #{param1}
+	</select>
+	
+	<!-- 저장하기 -->
+	<insert id="WriteAction">
+	insert into board 
+		values ( board_idx_SEQ.NEXTVAL , #{param1},#{param2},#{param3},sysdate,
+					0,#{param4},#{param5},#{param6},#{param7} )
+	</insert>
+	
+	<!-- 이미지 이름,경로 삭제 -->
+	<delete id="imgDelNamePath">
+	update board set filename1 = null ,filename2 = null,filename3 = null ,filepath = null
+		where board_idx = #{param3}
+	</delete>
+	
+	
+	<!-- 행 수정 -->
+	<update id="updateAction" >
+	update board set board_title=#{param1} , board_name=#{param2} , board_content=#{param3} ,
+	filename1=#{param5},filename2=#{param6},filename3=#{param7}, filepath=#{param8}
+	where board_idx = #{param4}
+	</update>	
+
+	<!-- 행 삭제 -->
+	<delete id="deleteAction">
+	delete from board where board_idx = #{param1}
+	</delete>
+	
+	
+	<!-- 조회수  -->
+	<update id="updateHit" >
+	update board set board_hit = board_hit+1 where board_idx = #{param1}
+	</update>
+	
+	
+	<!-- 게시물 1~5 , 6~10 조회하게하는 쿼리문 (페이징처리를 위한)-->
+	<select id="betweenList" resultType="com.study.springboot.dto.boardDto">
+		select B.* from
+		(select rownum R , board.* from board order by board_idx desc) B
+		where R between #{param1} and #{param2}
+	</select>
+	
+	<!--제목검색-->
+	<select id="betweenListTitle" resultType="com.study.springboot.dto.boardDto">
+		select B.* from
+			(select rownum R , board.* from board 
+			where board_title LIKE '%' ||  #{param3} || '%'
+	    	order by board_idx desc) B
+		where R between #{param1} and #{param2}
+	</select>
+	
+	<!-- 제목 게시물 총 개수 -->
+	<select id="titleCount" resultType="int">
+		select count(*) from board where board_title LIKE '%' ||  #{param1} || '%'
+	</select>
+	
+	<!-- 글쓴이 검색 -->
+	<select id="betweenListWrite" resultType="com.study.springboot.dto.boardDto">
+		select B.* from
+			(select rownum R , board.* from board 
+			where board_name LIKE '%' ||  #{param3} || '%'
+	    	order by board_idx desc) B
+		where R between #{param1} and #{param2}
+	</select>
+	
+	<!-- 글쓴이 게시물 총 개수 -->
+	<select id="writeCount" resultType="int">
+		select count(*) from board where board_name LIKE '%' ||  #{param1} || '%'
+	</select>
+	
+	<!-- 조회수 정렬 -->
+	<select id="orderHit" resultType="com.study.springboot.dto.boardDto">	
+		select B.* from
+		    (select rownum R , A.* from
+		        (select board.* from board order by board_hit desc ,board_idx desc) A) B
+			where R between #{param1} and #{param2} 
+	</select>
+	
+	
+</mapper>    
+

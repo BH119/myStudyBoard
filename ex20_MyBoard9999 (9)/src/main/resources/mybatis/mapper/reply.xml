@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.study.springboot.dao.replyDao">
+	<!-- 댓글 리스트 -->
+ 	<select id="replyList" resultType="com.study.springboot.dto.replyDto">
+	
+	select * from reply where reply_board_idx = #{param1} order by reply_idx desc
+	
+	</select>
+	
+	<!-- 이미지 댓글 리스트 -->
+ 	<select id="imgReplyList" resultType="com.study.springboot.dto.replyDto">
+	
+	select * from reply where reply_img_board_idx = #{param1} order by reply_idx desc
+	
+	</select>
+	
+	
+	<!-- 댓글 쓰기-->
+	<insert id="replyWrite">
+	
+	insert into reply (reply_idx , reply_name , reply_content ,reply_date , reply_board_idx)
+	values( reply_idx_SEQ.NEXTVAL , #{param1} , #{param2} , sysdate , #{param3})
+	
+	</insert> 
+	
+	<!-- 댓글 쓰기-->
+	<insert id="imgReplyWrite">
+	
+	insert into reply (reply_idx , reply_name , reply_content ,reply_date , reply_img_board_idx)
+	values( reply_idx_SEQ.NEXTVAL , #{param1} , #{param2} , sysdate , #{param3})
+	
+	</insert> 
+	
+	<!-- 댓글 삭제 -->
+	<delete id="replyDelete">
+	
+	delete from reply where reply_idx = #{param1} 
+	
+	</delete>
+	
+	<!-- 게시글 삭제 시  댓글 전부 삭제 -->
+	<delete id="replyDeleteAll">
+	
+	delete from reply where reply_board_idx = #{param1} 
+	
+	</delete>
+	
+	
+	
+</mapper>
