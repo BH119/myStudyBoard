@@ -16,7 +16,8 @@ public interface one2oneDao {
 	//글 갯수 출력
 	public int one2oneCount();
 	
-	
+	//idx값 넘겨주기
+	public one2oneDto one2oneIDX(int one2one_idx);
 	
 	//글 저장하기
 	public int one2oneWriteAction

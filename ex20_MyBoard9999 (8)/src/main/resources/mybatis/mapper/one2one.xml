@@ -38,11 +38,17 @@
 	
 	<!--step업데이트  -->
 	<update id="replyUpdateAction" >
-	update one2one set step = step+1 where step > (select step from one2one where one2one_idx = #{param1})
+	update one2one set step = step+1 
+		where step > (select step from one2one where one2one_idx = #{param1}) 
+		AND refer = (select refer from one2one where one2one_idx = #{param1})
 	  
 	</update>
 	
 	
+	<!-- 답변하기 idx값 넘겨주기 -->
+	<select id="one2oneIDX" resultType="com.study.springboot.dto.one2oneDto">
+	select * from one2one where ONE2ONE_IDX = #{param1}
+	</select>
 	
 	
 	<!-- 게시물 1~5 , 6~10 조회하게하는 쿼리문 (페이징처리를 위한)-->

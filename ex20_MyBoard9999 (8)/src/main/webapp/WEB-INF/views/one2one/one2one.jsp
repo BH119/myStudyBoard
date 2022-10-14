@@ -27,7 +27,7 @@
 	  <thead>
 	    <tr>
 	      <th scope="col">번호</th>
-	      <th scope="col">이름</th>
+	      <th scope="col">뎁스</th>
 	      <th scope="col">제목</th>
 	      <th scope="col">내용</th>
 	      <th scope="col">작성일</th>
@@ -38,8 +38,34 @@
 	  <c:forEach var="dto" items="${list}">
 	    <tr>
 	      <th scope="row">${ dto.one2one_idx }</th>
-	      <td>${ dto.one2one_name }</td>
-	      <td>${ dto.one2one_title }</td>
+<%-- 	      <td>${ dto.one2one_name }</td> --%>
+	       <td> ${dto.depth}</td>
+	      
+	      
+	      
+	      <c:choose>
+	  		<c:when test="${dto.depth == 0}" >
+	      <td>
+	       ${ dto.one2one_title }</td>
+	  	  </c:when>
+	  	  
+	  	  
+	  	  
+	  	  <c:otherwise>
+	  	  <td>
+	      <c:forEach var="i" begin="1" end="${dto.depth}">
+	      &nbsp;&nbsp;
+	  	  </c:forEach>
+	  	  ㄴ> ${ dto.one2one_title }</td>
+	  	  
+	  	  </c:otherwise>
+	  	  </c:choose>
+	  	  
+	  	  
+	  	  
+	  	  
+	  	  
+	  	  
 	      <td>${ dto.one2one_content }</td>
 	      <td><c:set var="dateVar" value="${ dto.one2one_date }" />
 			<fmt:formatDate value="${dateVar}" pattern="yyyy-MM-dd"/></td>

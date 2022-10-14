@@ -589,10 +589,13 @@ public class boardController {
 		 return "one2one/one2oneWrite";
 	}
 	@RequestMapping("one2oneWrite2")
-	public String one2oneWrite2( )
+	public String one2oneWrite2(
+			@RequestParam("one2one_idx") int one2one_idx,
+			Model model)
 	{
-		
-		 
+		System.out.println(one2one_idx);
+		model.addAttribute("dto" ,iOne2oneDao.one2oneIDX(one2one_idx)); 
+		 System.out.println(iOne2oneDao.one2oneIDX(one2one_idx));
 		 return "one2one/one2oneWrite2";
 	}
 	
@@ -619,9 +622,9 @@ public class boardController {
 			@RequestParam("one2oneName") String one2one_name,
 			@RequestParam("one2one_idx") int one2one_idx)
 	{
-		 System.out.println(one2one_title);
-		 iOne2oneDao.one2oneReplyAction(one2one_name, one2one_title, one2one_content,one2one_idx);
 		 
+		 iOne2oneDao.replyUpdateAction(one2one_idx);
+		 iOne2oneDao.one2oneReplyAction(one2one_name, one2one_title, one2one_content,one2one_idx);
 		 return "redirect:/one2one";
 	}
 	

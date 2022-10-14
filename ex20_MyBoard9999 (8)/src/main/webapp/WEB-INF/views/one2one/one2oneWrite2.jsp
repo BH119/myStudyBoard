@@ -16,8 +16,8 @@
 
 
 <div class="container1">
-	<form action="one2oneWriteAction2" method="post" name="" >
-		
+	<form action="one2oneWriteAction2?one2one_idx=${dto.one2one_idx }" method="post" name="" >
+		아아아아아아아${dto.one2one_content }
 	  <div class="form-group">
 	    <label for="exampleFormControlInput1">글쓴이</label>
 	    <input type="text" name="one2oneName"class="form-control" id="exampleFormControlInput1" value="${member_id}" readonly="readonly">
