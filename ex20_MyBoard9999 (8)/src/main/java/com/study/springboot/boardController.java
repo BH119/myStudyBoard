@@ -565,7 +565,7 @@ public class boardController {
 	
 	
 	
-	
+	//1대1문의 게시판
 	@RequestMapping("one2one")
 	public String one2one(
 			@RequestParam(defaultValue = "1") String page, // null값이면 page 디폴트 값이 "1"이다 페이지초기값 설정
