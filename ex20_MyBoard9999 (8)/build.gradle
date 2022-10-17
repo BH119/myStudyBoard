@@ -18,6 +18,9 @@ configurations {
 repositories {
 	mavenCentral()
 }
+bootWar {
+  archiveName("CompanyWebBootwar.war")
+}
 
 //오라클 xe에 접근하려면, jdbc파일이 필요하다.
 //ojdbc6.jar, ojdbc8.jar 파일
