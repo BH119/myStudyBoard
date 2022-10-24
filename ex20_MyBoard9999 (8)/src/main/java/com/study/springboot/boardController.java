@@ -622,6 +622,7 @@ public class boardController {
 			@RequestParam("one2oneName") String one2one_name,
 			@RequestParam("one2one_idx") int one2one_idx)
 	{
+		System.out.println("ddd");
 		 
 		 iOne2oneDao.replyUpdateAction(one2one_idx);
 		 iOne2oneDao.one2oneReplyAction(one2one_name, one2one_title, one2one_content,one2one_idx);
