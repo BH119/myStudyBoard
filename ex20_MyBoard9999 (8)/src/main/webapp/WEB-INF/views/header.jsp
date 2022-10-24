@@ -71,8 +71,16 @@ $(function(){
 	      <li class="nav-item">
 	        <a class="nav-link" href="/one2one">1:1문의</a>
 	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/chat">채팅방</a>
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+	          Dropdown
+	        </a>
+	        <div class="dropdown-menu">
+	          <a class="dropdown-item" href="#">Action</a>
+	          <a class="dropdown-item" href="#">Another action</a>
+	          <div class="dropdown-divider"></div>
+	          <a class="dropdown-item" href="#">Something else here</a>
+	        </div>
 	      </li>
 	    </ul>
 	    <c:if test="${ empty member_id }">
