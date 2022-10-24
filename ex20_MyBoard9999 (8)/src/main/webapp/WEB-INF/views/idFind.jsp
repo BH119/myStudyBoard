@@ -36,7 +36,8 @@ $(function(){
 	            	},
 	            dataType: "json", 	// 아니 t를 대문자로 써야하는걸 어케알아!!!
 	            success : function(date) {
-	            	
+	            	console.log(date)
+	            	console.log(date[1].member_id+"ddddddd")
 	            	if(date != "0"){
 	                    var str = "";
 		            	 // .each는 제이쿼리식 json배열로 들어온 값을 하나씩 출력해줌

@@ -27,6 +27,7 @@ $(function(){
 		var member_nameVal =  $("#member_name").val();
 		var chat_contentVal =  $("#chat_content").val();
 		
+		
 		$.ajax({
 	            url : "/chatAction",
 	            type : 'post',
@@ -34,14 +35,30 @@ $(function(){
 	            	member_nameVal : member_nameVal,
 	            	chat_contentVal : chat_contentVal
 	            	},
-	            success : function(date) {
-	            	
+	            success : function(date) { 
 				} //통신성공
 		}); // ajax
 	});	// 이메일전송클릭액션
 });	//온로드
 
+function chatview(){
+	$.ajax({
+        url : "/chatview",
+        dataType: "json",
+        success : function(date) { 
+        	var str = "";
+        	console.log(date);
+        	 $.each(date, function(i){                  
+                    str +='<p>'+ date[i].chat_name + ':'+ date[i].chat_content +'</p>' ;
+                   
+             	$("#chatting").html('<div class="alert alert-primary">'+str+'</div>');
+             	
+             });//each문
+		} //통신성공
+}); // ajax
+}
 
+setInterval(chatview,1000);
 
 
 
@@ -61,7 +78,10 @@ $(function(){
 	  <button id="chatWriteBtn" type="button" style="width: 130px; margin-left: 10px" class="btn btn-outline-primary">전송</button>
 	  </div>
 	  <div id="chatResult">
-	  	<div class="alert alert-primary">유봉현님의 채팅방 입니다</div>
+	  	<div class="alert alert-primary">유봉현님의 채팅방 입니다
+	  		<div id="chatting">
+	  		</div>
+	  	</div>
 	  </div>
 	  <button type="button" onclick="location.href='/'" class="btn btn-primary">홈으로..</button>
 	</form>

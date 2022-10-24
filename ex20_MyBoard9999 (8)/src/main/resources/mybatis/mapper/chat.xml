@@ -11,7 +11,11 @@
 
  	 <!-- 전체 조회 -->	
 	<select id="chatList" resultType="com.study.springboot.dto.chatDto">
-	select * from chat order by chat_idx desc
+		select B.* from  
+    		(select rownum R ,A.* from
+        		(select chat.* from
+				chat order by chat_idx desc) A) B
+        where R between 1 and 5
 	</select>
     
     <insert id="chatWrite">
