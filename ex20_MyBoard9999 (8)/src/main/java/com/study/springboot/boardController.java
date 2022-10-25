@@ -631,6 +631,30 @@ public class boardController {
 	
 	
 	
+	//채팅저장
+	@RequestMapping("/chatAction")
+	@ResponseBody
+	public String chatAction(
+			@RequestParam("member_nameVal")String member_nameVal,
+			@RequestParam("chat_contentVal")String chat_contentVal,
+			Model model) {
+			
+		iChatDao.chatWrite(member_nameVal, chat_contentVal);
+		return "1";
+		
+	}
+	//주기적으로 표출
+	@RequestMapping("/chatview")
+	@ResponseBody
+	public String chatAction(
+			Model model) {
+			
+		List<chatDto> list = iChatDao.chatList();
+		
+		Gson gson = new GsonBuilder().create(); //gson라이브러리로 list를 json형식으로 바꿔버림
+		System.out.println(gson.toJson(list));
+		return gson.toJson(list);
 	
+	}
 	
 }	

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD 파일 : XML태그 및 속성을 정의하는 파일 -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- SQL문 끝에 세미콜론은 붙이지 않는다! 오류!! -->
+<mapper namespace="com.study.springboot.dao.chatDao">
+
+ 	 <!-- 전체 조회 -->	
+	<select id="chatList" resultType="com.study.springboot.dto.chatDto">
+		select B.* from  
+    		(select rownum R ,A.* from
+        		(select chat.* from
+				chat order by chat_idx desc) A) B
+        where R between 1 and 5
+	</select>
+    
+    <insert id="chatWrite">
+	insert into chat 
+		values ( chat_idx_SEQ.NEXTVAL , #{param1},#{param2})
+	</insert>
+    
+	
+</mapper>    
+
