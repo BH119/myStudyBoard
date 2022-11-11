@@ -19,7 +19,7 @@ repositories {
 	mavenCentral()
 }
 bootWar {
-  archiveName("CompanyWebBootwar.war")
+  archiveName("myboard.war")
 }
 
 //오라클 xe에 접근하려면, jdbc파일이 필요하다.
