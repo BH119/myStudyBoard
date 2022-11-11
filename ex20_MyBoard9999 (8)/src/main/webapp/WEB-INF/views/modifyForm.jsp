@@ -71,10 +71,18 @@ $(function(){
 	<input type="hidden" name="filename3" value="${dto.filename3 }">
 	<input type="hidden" name="boardIdx" value="${dto.board_idx }">
 	<h2>글번호 :${dto.board_idx }</h2>
-	  <div class="form-group">
-	    <label for="exampleFormControlInput1">글 제목 </label>
-	    <input type="text" value="${dto.board_title }" name="boardTitle"class="form-control" id="exampleFormControlInput1" placeholder="글 제목">
-	  </div>
+	  <c:if test="${member_id != dto.board_name}">	
+		  <div class="form-group">
+		    <label for="exampleFormControlInput1">글 제목 </label>
+		    <input type="text" value="${dto.board_title }" name="boardTitle"class="form-control" disabled="disabled" id="exampleFormControlInput1" placeholder="글 제목">
+		  </div>
+	  </c:if>	
+	  <c:if test="${member_id == dto.board_name}">	
+		  <div class="form-group">
+		    <label for="exampleFormControlInput1">글 제목 </label>
+		    <input type="text" value="${dto.board_title }" name="boardTitle"class="form-control"  id="exampleFormControlInput1" placeholder="글 제목">
+		  </div>
+	  </c:if>	  
 	  <div class="form-group">
 	    <label for="exampleFormControlInput1">글쓴이</label>
 	    <input type="text" value="${dto.board_name }" name="boardName"class="form-control" id="exampleFormControlInput1" readonly="readonly" value="" placeholder="글 제목">
@@ -105,13 +113,23 @@ $(function(){
 		</div>
 	  </div>
 	 <!-- 파일업로드 -->
+	 <c:if test="${member_id == dto.board_name}">
 	  <input type="file" id="filename" name="filenames" multiple="multiple" >		
 	  <button type="button" onclick="location.href='imgDelete?board_idx=${dto.board_idx }&filename1=${dto.filename1}&filename2=${dto.filename2}&filename3=${dto.filename3}'" class="btn btn-outline-primary">이미지 삭제하기</button>
-
+	  </c:if>
+	  <br>
+	  <c:if test="${member_id != dto.board_name}">
+	  <div class="form-group">
+	    <label for="exampleFormControlTextarea1">글 내용</label>
+	    <textarea name="boardContent" class="form-control" id="exampleFormControlTextarea1" disabled="disabled" rows="6">${dto.board_content }</textarea>
+	  </div>
+	  </c:if>
+	  <c:if test="${member_id == dto.board_name}">
 	  <div class="form-group">
 	    <label for="exampleFormControlTextarea1">글 내용</label>
 	    <textarea name="boardContent" class="form-control" id="exampleFormControlTextarea1"  rows="6">${dto.board_content }</textarea>
 	  </div>
+	  </c:if>
 	  
 	  <c:if test="${member_id == dto.board_name}">
   	  <button type="submit" name="modifyBtn" class="btn btn-outline-primary">수정하기</button>

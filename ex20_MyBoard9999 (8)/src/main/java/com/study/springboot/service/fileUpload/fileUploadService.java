@@ -39,8 +39,7 @@ public class fileUploadService {
 			PK = calendar.get(Calendar.MILLISECOND);
 			
 			//파일이름 적용
-			String OriginfileName = file.getOriginalFilename();
-			fileName = fileName +"_"+PK+"_" + OriginfileName;
+			fileName = fileName +"_"+PK;
 			
 			// 결과물 할당
 			File saveFile = new File(ProjectPath, fileName);
