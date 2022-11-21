@@ -51,7 +51,7 @@ public class imgBoardFileWriteService {
 			}
 			//DB저장 로직
 			String filepath="";  //경로는 그냥 정해져있으므로 문자열로 할당.
-			filepath = "resources\\imgBoard\\";
+			filepath = "/upload/";
 			
 			//값들을 꺼내와서 할당
 			String filename1 = fileNameList.get(0);
@@ -67,7 +67,7 @@ public class imgBoardFileWriteService {
 		}
 		else{
 			String filepath="";  //경로는 그냥 정해져있으므로 문자열로 할당.
-			filepath = "resources\\imgBoard\\";
+			filepath = "/upload/";
 			
 			List<String> files = new ArrayList<String>(Arrays.asList(null,null,null,filepath));
 			return files;

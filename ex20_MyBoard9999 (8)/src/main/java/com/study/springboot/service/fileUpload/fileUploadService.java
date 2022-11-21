@@ -21,7 +21,7 @@ public class fileUploadService {
 
 			
 			//저장할 경로 설정   System.getProperty("user.dir") = 현재 디렉토리 (경로딸때 유용)
-			String ProjectPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\resources\\img"; 
+			String ProjectPath = System.getProperty("user.dir") + "/upload"; 
 			System.out.println("경로: "+ ProjectPath);
 			
 			
