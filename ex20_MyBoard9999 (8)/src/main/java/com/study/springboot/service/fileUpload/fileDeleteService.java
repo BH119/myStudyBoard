@@ -18,7 +18,7 @@ public class fileDeleteService {
 			@RequestParam("filename3") String filename3) 
 	{
 		//업로드파일 삭제
-		String ProjectPath = System.getProperty("user.dir") + "\\src\\main\\webapp\\resources\\img\\";
+		String ProjectPath = System.getProperty("user.dir") + "/upload/";
 		List<String> files = new ArrayList<String>(Arrays.asList(filename1,filename2,filename3));
 		
 		File file;

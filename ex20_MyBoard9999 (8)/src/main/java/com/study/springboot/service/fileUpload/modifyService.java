@@ -52,7 +52,7 @@ public class modifyService {
 		}
 		else {
 			String filepath="";  //경로는 그냥 정해져있으므로 문자열로 할당.
-			filepath = "resources\\img\\";
+			filepath = "/upload/";
 			
 			iBoardDao.updateAction(board_title , board_name, board_content, 
 						board_idx, filename1, filename2, filename3, filepath);

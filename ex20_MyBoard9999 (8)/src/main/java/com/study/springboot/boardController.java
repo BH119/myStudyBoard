@@ -20,11 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.study.springboot.dao.boardDao;
+import com.study.springboot.dao.chatDao;
 import com.study.springboot.dao.imgBoardDao;
 import com.study.springboot.dao.membersDao;
 import com.study.springboot.dao.one2oneDao;
 import com.study.springboot.dao.membersDao;
 import com.study.springboot.dao.replyDao;
+import com.study.springboot.dto.chatDto;
 import com.study.springboot.dto.imgBoardDto;
 import com.study.springboot.dto.membersDto;
 import com.study.springboot.dto.replyDto;
@@ -80,6 +82,8 @@ public class boardController {
 	one2onePageService iOne2onePageService;
 	@Autowired
 	one2oneSearchService iOne2oneSearchService;
+	@Autowired
+	chatDao iChatDao;
 	
 	//메인페이지 폼으로
 	@RequestMapping("/")
@@ -493,7 +497,6 @@ public class boardController {
 	//이미지글쓰기폼
 	@RequestMapping("imgBoardWrite")
 	public String imgBoardWrite( ) {
-		System.out.println("ddd");
 		return "imgBoard/imgBoardWrite";
 	}
 	
@@ -629,6 +632,11 @@ public class boardController {
 	}
 	
 	
+	//채팅방으로~
+	@RequestMapping("/chat")
+	public String chat() {
+		return "/chat";
+	}
 	
 	
 	//채팅저장
